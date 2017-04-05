@@ -74,6 +74,14 @@ public class Library {
         bookings.remove(booking);
     }
 
+    public Set<Book> getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(Set<Book> catalog) {
+        this.catalog = catalog;
+    }
+
     public void showAllData() {
         for (Book book:
                 catalog

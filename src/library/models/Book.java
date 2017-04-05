@@ -1,13 +1,28 @@
 package library.models;
 
+import java.io.Serializable;
+
 /**
  * Created by sergey on 05.04.17.
  */
-public class Book {
+public class Book implements Serializable {
     private String author;
     private String title;
     private int year;
     private String isbn;
+    private static long serialVersionUID = 2L;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
 
     public String getTitle() {
         return title;

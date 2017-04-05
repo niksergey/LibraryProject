@@ -1,16 +1,30 @@
 package library.models;
 
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.Serializable;
 import java.util.Date;
+import java.io.Externalizable;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+
 
 /**
  * Created by sergey on 05.04.17.
  */
-public class Booking {
+public class Booking implements Externalizable {
     private BookInstance bookInstance;
     private Reader reader;
     private Date startDate;
     private Date finishDate;
     private Date returnDate;
+
+    private static long serialVersionUID = 2017L;
 
     public Booking(BookInstance bookInstance, Reader reader, Date startDate, Date finishDate) {
         this.bookInstance = bookInstance;
@@ -18,6 +32,17 @@ public class Booking {
         this.startDate = startDate;
         this.finishDate = finishDate;
     }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeUTF("niksergey");
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        System.out.println(in.readUTF());
+    }
+
 
     @Override
     public int hashCode() {
