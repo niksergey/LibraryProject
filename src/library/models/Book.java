@@ -9,6 +9,10 @@ public class Book {
     private int year;
     private String isbn;
 
+    public String getTitle() {
+        return title;
+    }
+
     public Book(String author, String title, int year, String isbn) {
         this.author = author;
         this.title = title;

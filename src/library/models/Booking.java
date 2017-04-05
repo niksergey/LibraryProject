@@ -58,4 +58,12 @@ public class Booking {
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
+
+    public BookInstance getBookInstance() {
+        return bookInstance;
+    }
+
+    public Reader getReader() {
+        return reader;
+    }
 }
