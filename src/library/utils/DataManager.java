@@ -10,34 +10,27 @@ import java.util.Set;
  * Created by sergey on 05.04.17.
  */
 public class DataManager {
-    public static void serializeToFile(Set<Book> books) {
-        try(FileOutputStream fos = new FileOutputStream("books.txt");
+    public static void serializeToFile(Object obj, String filename) {
+        try(FileOutputStream fos = new FileOutputStream(filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            for(Book book : books)
-                oos.writeObject(book);
-
+            oos.writeObject(obj);
         } catch(IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public static Set<Book> deserialize() {
-        Set<Book> books = new HashSet<>();
-        try(FileInputStream fis = new FileInputStream("books.txt");
+    public static Object deserialize(String filename) {
+        Object obj = null;
+        try(FileInputStream fis = new FileInputStream(filename);
             ObjectInputStream ois = new ObjectInputStream(fis)) {
-
-            Book book = null;
-            while((book = (Book) ois.readObject()) != null) {
-                books.add(book);
-            }
+            obj =  ois.readObject();
         } catch(IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
-            return books;
+            return obj;
         }
-
     }
 
 

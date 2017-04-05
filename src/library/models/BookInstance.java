@@ -1,5 +1,6 @@
 package library.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -7,7 +8,7 @@ import java.util.UUID;
 /**
  * Created by sergey on 05.04.17.
  */
-public class BookInstance {
+public class BookInstance implements Serializable {
     private Book book;
     private UUID number;
 

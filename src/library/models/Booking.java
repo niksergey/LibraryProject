@@ -20,6 +20,10 @@ public class Booking implements Externalizable {
 
     private static long serialVersionUID = 2017L;
 
+    public Booking() {
+
+    }
+
     public Booking(BookInstance bookInstance, Reader reader, Date startDate, Date finishDate) {
         this.bookInstance = bookInstance;
         this.reader = reader;

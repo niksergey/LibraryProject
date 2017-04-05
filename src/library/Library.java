@@ -14,6 +14,9 @@ public class Library {
     private Set<Book> catalog;
     private Set<BookInstance> store;
     private Set<Reader> readers;
+
+
+
     private Set<Booking> bookings;
 
     public Library() {
@@ -79,6 +82,14 @@ public class Library {
 
     public void setCatalog(Set<Book> catalog) {
         this.catalog = catalog;
+    }
+
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public void showAllData() {
