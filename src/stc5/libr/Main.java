@@ -47,7 +47,7 @@ public class Main {
                 System.out.println("Book instance: " + booking.getBookInstance() + ", Reader: " + booking.getReader());
         }
 
-//        library.showAllData();
+        library.showAllData();
 
         if (serialize) {
             Set<Booking> bookingsToWrite = library.getBookings();

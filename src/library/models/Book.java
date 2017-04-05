@@ -12,6 +12,16 @@ public class Book implements Externalizable {
     private String isbn;
     private static long serialVersionUID = 2L;
 
+    public Book() {
+    }
+
+    public Book(String author, String title, int year, String isbn) {
+        this.author = author;
+        this.title = title;
+        this.year = year;
+        this.isbn = isbn;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -26,16 +36,6 @@ public class Book implements Externalizable {
 
     public String getTitle() {
         return title;
-    }
-
-    public Book() {
-    }
-
-    public Book(String author, String title, int year, String isbn) {
-        this.author = author;
-        this.title = title;
-        this.year = year;
-        this.isbn = isbn;
     }
 
     @Override

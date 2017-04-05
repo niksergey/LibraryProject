@@ -1,6 +1,6 @@
 package library.models;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -8,21 +8,24 @@ import java.util.UUID;
 /**
  * Created by sergey on 05.04.17.
  */
-public class BookInstance implements Serializable {
+public class BookInstance implements Externalizable {
     private Book book;
     private UUID number;
 
-    private List<Booking> bookingHistory;
+    private static long serialVersionUID = 21341L;
+//    private List<Booking> bookingHistory;
 
-    public Book getBook() {
-        return book;
-    }
+    public BookInstance() {}
 
     public BookInstance(Book book, UUID number) {
         this.book = book;
         this.number = number;
 
-        bookingHistory = new ArrayList<>(32);
+//        bookingHistory = new ArrayList<>(32);
+    }
+
+    public Book getBook() {
+        return book;
     }
 
     @Override
@@ -47,5 +50,22 @@ public class BookInstance implements Serializable {
     @Override
     public String toString() {
         return book + "@" + number;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException
+    {
+        out.writeObject(book);
+        out.writeObject(number);
+        out.writeUTF("niksergey in " + this.getClass().getName());
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException
+    {
+        this.book = (Book)in.readObject();
+        this.number = (UUID) in.readObject();
+
+        System.out.println(in.readUTF());
     }
 }
