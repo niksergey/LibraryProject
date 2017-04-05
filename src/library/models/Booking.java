@@ -2,16 +2,10 @@ package library.models;
 
 import java.io.IOException;
 import java.io.ObjectOutput;
-import java.io.Serializable;
 import java.util.Date;
 import java.io.Externalizable;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+
 
 
 /**
@@ -35,14 +29,24 @@ public class Booking implements Externalizable {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(bookInstance);
+        out.writeObject(reader);
+        out.writeObject(startDate);
+        out.writeObject(finishDate);
+        out.writeObject(returnDate);
         out.writeUTF("niksergey");
     }
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        this.bookInstance = (BookInstance) in.readObject();
+        this.reader = (Reader) in.readObject();
+        this.startDate = (Date) in.readObject();
+        this.finishDate = (Date) in.readObject();
+        this.returnDate = (Date) in.readObject();
+
         System.out.println(in.readUTF());
     }
-
 
     @Override
     public int hashCode() {

@@ -1,11 +1,11 @@
 package library.models;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * Created by sergey on 05.04.17.
  */
-public class Book implements Serializable {
+public class Book implements Externalizable {
     private String author;
     private String title;
     private int year;
@@ -28,11 +28,32 @@ public class Book implements Serializable {
         return title;
     }
 
+    public Book() {
+    }
+
     public Book(String author, String title, int year, String isbn) {
         this.author = author;
         this.title = title;
         this.year = year;
         this.isbn = isbn;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(author);
+        out.writeObject(title);
+        out.writeInt(year);
+        out.writeObject(isbn);
+        out.writeUTF("niksergey");
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        this.author = (String) in.readObject();
+        this.title = (String) in.readObject();
+        this.year = in.readInt();
+        this.isbn = (String) in.readObject();
+        System.out.println(in.readUTF());
     }
 
     @Override
