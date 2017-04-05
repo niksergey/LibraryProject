@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         Library library = new Library();
 
-        final boolean serialize = false;
+        final boolean serialize = true;
 
         if (!serialize) {
             Set<Book> books = new HashSet<>();
