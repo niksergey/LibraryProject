@@ -44,7 +44,7 @@ public class Book implements Externalizable {
         out.writeObject(title);
         out.writeInt(year);
         out.writeObject(isbn);
-        out.writeUTF("niksergey");
+        out.writeUTF("niksergey in " + this.getClass().getName());
     }
 
     @Override

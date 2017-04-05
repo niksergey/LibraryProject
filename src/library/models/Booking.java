@@ -38,7 +38,7 @@ public class Booking implements Externalizable {
         out.writeObject(startDate);
         out.writeObject(finishDate);
         out.writeObject(returnDate);
-        out.writeUTF("niksergey");
+        out.writeUTF("niksergey in " + this.getClass().getName());
     }
 
     @Override
