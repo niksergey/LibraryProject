@@ -6,8 +6,6 @@ import java.util.Date;
 import java.io.Externalizable;
 import java.io.ObjectInput;
 
-
-
 /**
  * Created by sergey on 05.04.17.
  */

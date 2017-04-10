@@ -12,6 +12,15 @@ import java.util.UUID;
  */
 public class Library {
     private Set<Book> catalog;
+
+    public Set<BookInstance> getStore() {
+        return store;
+    }
+
+    public void setStore(Set<BookInstance> store) {
+        this.store = store;
+    }
+
     private Set<BookInstance> store;
     private Set<Reader> readers;
 
