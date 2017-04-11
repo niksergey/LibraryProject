@@ -17,6 +17,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Set;
 
 /**
  * Created by sergey on 11.04.17.
@@ -31,61 +32,74 @@ public class XMLExporter {
             Element rootElement = doc.createElement(rootName);
             doc.appendChild(rootElement);
 
-            Element fieldsElement = doc.createElement("Fields");
-            rootElement.appendChild(fieldsElement);
+            appendToNode(doc, rootElement, obj);
 
-            try {
-                for (Field field : obj.getClass().getDeclaredFields()) {
-                    field.setAccessible(true);
-                    Element fElement = doc.createElement("Field");
+            writeXmlToFile(doc, outFileName);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
 
-                    Attr nameAttr = doc.createAttribute("name");
-                    nameAttr.setValue(field.getName());
-                    fElement.setAttributeNode(nameAttr);
+    private static void appendToNode(Document doc, Element nodeElement, Object obj) {
+        Element fieldsElement = doc.createElement("Fields");
+        nodeElement.appendChild(fieldsElement);
 
-                    Attr typeAttr = doc.createAttribute("type");
-                    typeAttr.setValue(field.getType().getName());
-                    fElement.setAttributeNode(typeAttr);
-
-                    fElement.appendChild(doc.createTextNode(field.get(obj).toString()));
-
-                    fieldsElement.appendChild(fElement);
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-
-            Element methodElement = doc.createElement("Methods");
-            rootElement.appendChild(methodElement);
-
-            for (Method method : obj.getClass().getMethods()) {
-                method.setAccessible(true);
-                Element metElem = doc.createElement("Method");
-                methodElement.appendChild(metElem);
-
-                for(Parameter param: method.getParameters()) {
-                    Element paramElem = doc.createElement("parameter");
-                    metElem.appendChild(paramElem);
-
-                    Attr metAttr = doc.createAttribute("type");
-                    metAttr.setValue(param.getType().getName());
-                    paramElem.setAttributeNode(metAttr);
-                }
+        try {
+            for (Field field : obj.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                Element fElement = doc.createElement("Field");
 
                 Attr nameAttr = doc.createAttribute("name");
-                nameAttr.setValue(method.getName());
-                metElem.setAttributeNode(nameAttr);
+                nameAttr.setValue(field.getName());
+                fElement.setAttributeNode(nameAttr);
 
-                Attr modifAttr = doc.createAttribute("isAccessible");
-                modifAttr.setValue(Boolean.toString(method.isAccessible()));
-                metElem.setAttributeNode(modifAttr);
+                Attr typeAttr = doc.createAttribute("type");
+                typeAttr.setValue(field.getType().getName());
+                fElement.setAttributeNode(typeAttr);
 
-                Attr returnTypeAttr = doc.createAttribute("returnType");
-                returnTypeAttr.setValue(method.getReturnType().getName());
-                metElem.setAttributeNode(returnTypeAttr);
+                fElement.appendChild(doc.createTextNode(field.get(obj).toString()));
+
+                fieldsElement.appendChild(fElement);
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        Element methodElement = doc.createElement("Methods");
+        nodeElement.appendChild(methodElement);
+
+        for (Method method : obj.getClass().getMethods()) {
+            method.setAccessible(true);
+            Element metElem = doc.createElement("Method");
+            methodElement.appendChild(metElem);
+
+            for(Parameter param: method.getParameters()) {
+                Element paramElem = doc.createElement("parameter");
+                metElem.appendChild(paramElem);
+
+                Attr metAttr = doc.createAttribute("type");
+                metAttr.setValue(param.getType().getName());
+                paramElem.setAttributeNode(metAttr);
             }
 
+            Attr nameAttr = doc.createAttribute("name");
+            nameAttr.setValue(method.getName());
+            metElem.setAttributeNode(nameAttr);
+
+            Attr modifAttr = doc.createAttribute("isAccessible");
+            modifAttr.setValue(Boolean.toString(method.isAccessible()));
+            metElem.setAttributeNode(modifAttr);
+
+            Attr returnTypeAttr = doc.createAttribute("returnType");
+            returnTypeAttr.setValue(method.getReturnType().getName());
+            metElem.setAttributeNode(returnTypeAttr);
+        }
+    }
+
+    private static void writeXmlToFile(Document doc, String outFileName) {
+        try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
+
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(outFileName));
@@ -93,8 +107,6 @@ public class XMLExporter {
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
         } catch (TransformerException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
     }

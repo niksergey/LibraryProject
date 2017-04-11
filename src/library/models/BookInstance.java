@@ -20,8 +20,6 @@ public class BookInstance implements Externalizable {
     public BookInstance(Book book, UUID number) {
         this.book = book;
         this.number = number;
-
-//        bookingHistory = new ArrayList<>(32);
     }
 
     public Book getBook() {

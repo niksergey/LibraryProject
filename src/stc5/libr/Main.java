@@ -2,6 +2,7 @@ package stc5.libr;
 
 import library.Library;
 import library.models.Book;
+import library.models.BookInstance;
 import library.models.Booking;
 import library.models.Reader;
 import library.utils.DataManager;
@@ -35,6 +36,10 @@ public class Main {
             library.buyBook("Intro to Java", "Schildt", "1241241ada", 5, 2017);
             library.buyBook("How to hack Pentagon", "Snowden", "54524dfh", 5, 2015);
         }
+
+        BookInstance fisrtInst = library.getStore().iterator().next();
+
+        XMLExporter.classMetaInfoToXML("BookInstance", "bookInstance.xml", fisrtInst);
 
         library.takeBook("John", "Connor", "Androidovich", 12345678,
                 "Intro to Java");

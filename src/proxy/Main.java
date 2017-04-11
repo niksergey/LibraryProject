@@ -1,6 +1,5 @@
 package proxy;
 
-
 import library.models.Book;
 
 import java.lang.reflect.Proxy;
