@@ -15,30 +15,6 @@ public class Book implements Externalizable {
     private String isbn;
     private static long serialVersionUID = 2L;
 
-    public void printClassImport() {
-        System.out.println(Book.class.getCanonicalName());
-
-        for (Method method : this.getClass().getMethods()) {
-            System.out.println(method.getName());
-            System.out.println(method.getReturnType().getName());
-            for(Parameter param: method.getParameters()) {
-                System.out.println(param.getName() + " " + param.getType().getName());
-            }
-            System.out.println("modifier " + method.getModifiers());
-        }
-
-        try {
-            for (Field field : Class.forName("library.models.Book").getDeclaredFields()) {
-                field.setAccessible(true);
-                System.out.println(field.getName());
-                System.out.println(field.getType().getName());
-                System.out.println(field.isAccessible());
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public Book() {
     }
 
