@@ -31,6 +31,7 @@ class MainTest {
 
     private static Library library;
 
+
     @BeforeAll
     public static void init() {
         library = new Library();

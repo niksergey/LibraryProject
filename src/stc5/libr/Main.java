@@ -12,6 +12,10 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
+        Book book1 = new Book("I", "the", 1988, " year born");
+//        book1.printClassImport();
+        book1.exportStructToXML();
+
         Library library = new Library();
 
         final boolean serialize = true;
