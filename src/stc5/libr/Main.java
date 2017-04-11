@@ -5,6 +5,7 @@ import library.models.Book;
 import library.models.Booking;
 import library.models.Reader;
 import library.utils.DataManager;
+import library.utils.XMLExporter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,8 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         Book book1 = new Book("I", "the", 1988, " year born");
-//        book1.printClassImport();
-        book1.exportStructToXML();
+        XMLExporter.classMetaInfoToXML("Book", "book.xml", book1);
 
         Library library = new Library();
 
