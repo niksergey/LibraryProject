@@ -1,11 +1,9 @@
 package stc5.libr;
 
 import library.Library;
-import library.models.Book;
-import library.models.BookInstance;
-import library.models.Booking;
-import library.models.Reader;
+import library.models.*;
 import library.utils.DataManager;
+import library.utils.DatabaseManager;
 import library.utils.XMLExporter;
 
 import java.util.HashSet;
@@ -14,12 +12,33 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
-        Book book1 = new Book("I", "the", 1988, " year born");
-        XMLExporter.classMetaInfoToXML("Book", "book.xml", book1);
+        final boolean serialize = true;
 
         Library library = new Library();
 
-        final boolean serialize = true;
+        Book bookPHP = new Book("Ullman", "PHP for the Web", 2017, "978-0321733450");
+        Book astralBody = new Book("Донцова Д.", "Астральное тело холостяка", 2016, "978-5-699-93058-6");
+
+        DatabaseManager databaseManager = new DatabaseManager();
+
+        databaseManager.clearTable();
+        databaseManager.insert(bookPHP);
+        databaseManager.select();
+
+        bookPHP.setAuthor("Tolkien");
+        databaseManager.update(bookPHP);
+        databaseManager.insert(astralBody);
+        databaseManager.select();
+
+        databaseManager.delete(bookPHP);
+        System.out.println("After removing book");
+        databaseManager.select();
+
+        System.out.println("");
+
+
+        XMLExporter.classMetaInfoToXML("Book", "book.xml", astralBody);
+
 
         if (!serialize) {
             Set<Book> books = new HashSet<>();
