@@ -2,15 +2,16 @@ package library.utils;
 
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.*;
 
 
 public class SendMailTLS {
 
-    public static void sendMail(String toAddress, String subj, String msgText) {
+    public static void sendMail(String toAddress, String subj, String msgText, String fileAttactName) {
         final String username = "sergeynikolaevboox@gmail.com";
         final String password = "javaCourse5";
 
@@ -33,7 +34,22 @@ public class SendMailTLS {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toAddress));
             message.setSubject(subj);
-            message.setText(msgText);
+
+            if (fileAttactName != null) {
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                Multipart multipart = new MimeMultipart();
+
+                messageBodyPart.setText(msgText);
+                DataSource source = new FileDataSource(fileAttactName);
+                messageBodyPart.setDataHandler(new DataHandler(source));
+                messageBodyPart.setFileName("attach.txt");
+                multipart.addBodyPart(messageBodyPart);
+
+                message.setContent(multipart);
+            } else {
+                message.setText(msgText);
+            }
+
             Transport.send(message);
         } catch (AddressException e) {
             e.printStackTrace();

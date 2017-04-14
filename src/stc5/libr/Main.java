@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) {
 //        logger.debug("Start library");
 
-        SendMailTLS.sendMail("me@nikser.ru", "Test message", "If you see this message program works");
+//        SendMailTLS.sendMail("me@nikser.ru", "Test message", "If you see this message program works");
 
         final boolean serialize = true;
 

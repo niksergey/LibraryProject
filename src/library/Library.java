@@ -39,7 +39,8 @@ public class Library {
         readers = new HashSet<>(512);
         bookings = new HashSet<>(2048);
 
-        LOGGER.debug("Message from Library");
+        for(int i = 0; i < 100; i++)
+            LOGGER.debug("Message from Library!");
     }
 
     public void buyBook(String title, String author, String isbn, int quantity, int year) {
