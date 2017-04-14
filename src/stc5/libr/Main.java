@@ -4,6 +4,7 @@ import library.Library;
 import library.models.*;
 import library.utils.DataManager;
 import library.utils.DatabaseManager;
+import library.utils.SendMailTLS;
 import library.utils.XMLExporter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -20,6 +21,8 @@ public class Main {
 
     public static void main(String[] args) {
 //        logger.debug("Start library");
+
+        SendMailTLS.sendMail("me@nikser.ru", "Test message", "If you see this message program works");
 
         final boolean serialize = true;
 
