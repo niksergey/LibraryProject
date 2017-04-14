@@ -5,13 +5,22 @@ import library.models.*;
 import library.utils.DataManager;
 import library.utils.DatabaseManager;
 import library.utils.XMLExporter;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Main {
+    static {
+//        PropertyConfigurator.configure("log4j.properties");
+    }
+
+    private final static Logger logger = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
+//        logger.debug("Start library");
+
         final boolean serialize = true;
 
         Library library = new Library();

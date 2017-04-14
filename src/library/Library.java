@@ -1,16 +1,22 @@
 package library;
 
 import library.models.*;
+import org.apache.log4j.xml.DOMConfigurator;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import org.apache.log4j.Logger;
+
 
 /**
  * Created by sergey on 05.04.17.
  */
 public class Library {
+    static {
+        DOMConfigurator.configure("log4j.xml");
+    }
     private Set<Book> catalog;
 
     public Set<BookInstance> getStore() {
@@ -23,16 +29,17 @@ public class Library {
 
     private Set<BookInstance> store;
     private Set<Reader> readers;
-
-
-
     private Set<Booking> bookings;
+
+    private static final Logger LOGGER = Logger.getLogger(Library.class);
 
     public Library() {
         catalog = new HashSet<>(1024);
         store = new HashSet<>(4096);
         readers = new HashSet<>(512);
         bookings = new HashSet<>(2048);
+
+        LOGGER.debug("xml configurator");
     }
 
     public void buyBook(String title, String author, String isbn, int quantity, int year) {
