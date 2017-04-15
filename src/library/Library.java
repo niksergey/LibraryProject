@@ -14,9 +14,7 @@ import org.apache.log4j.Logger;
  * Created by sergey on 05.04.17.
  */
 public class Library {
-    static {
-        DOMConfigurator.configure("log4j_gmail.xml");
-    }
+
     private Set<Book> catalog;
 
     public Set<BookInstance> getStore() {
@@ -38,9 +36,6 @@ public class Library {
         store = new HashSet<>(4096);
         readers = new HashSet<>(512);
         bookings = new HashSet<>(2048);
-
-        for(int i = 0; i < 100; i++)
-            LOGGER.debug("Message from Library!");
     }
 
     public void buyBook(String title, String author, String isbn, int quantity, int year) {

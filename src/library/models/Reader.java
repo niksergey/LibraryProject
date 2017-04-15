@@ -17,6 +17,8 @@ public class Reader implements Externalizable {
     private String lastName;
     private long passportNumber;
 
+    private String email;
+
     private static long serialVersionUID = 2017252L;
 
 
@@ -27,6 +29,7 @@ public class Reader implements Externalizable {
         this.secondName = secondName;
         this.lastName = lastName;
         this.passportNumber = passportNumber;
+        this.email = "mail@example.com";
     }
 
     @Override
@@ -83,5 +86,13 @@ public class Reader implements Externalizable {
         this.lastName = (String) in.readObject();
 
         this.passportNumber = (long) in.readObject();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

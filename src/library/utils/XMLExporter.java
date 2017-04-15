@@ -7,23 +7,20 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
+
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.Set;
 
 /**
  * Created by sergey on 11.04.17.
  */
 public class XMLExporter {
-    public static void classMetaInfoToXML(String rootName, String outFileName, Object obj) {
+    public static void classMetaInfoToXML(String rootName, OutputStream outputStream, Object obj) {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -34,7 +31,8 @@ public class XMLExporter {
 
             appendToNode(doc, rootElement, obj);
 
-            writeXmlToFile(doc, outFileName);
+            writeXmlToOutputStream(doc, outputStream);
+
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
@@ -57,9 +55,11 @@ public class XMLExporter {
                 typeAttr.setValue(field.getType().getName());
                 fElement.setAttributeNode(typeAttr);
 
-                fElement.appendChild(doc.createTextNode(field.get(obj).toString()));
-
-                fieldsElement.appendChild(fElement);
+                Object objField = field.get(obj);
+                if (objField != null) {
+                    fElement.appendChild(doc.createTextNode(objField.toString()));
+                    fieldsElement.appendChild(fElement);
+                }
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -96,13 +96,14 @@ public class XMLExporter {
         }
     }
 
-    private static void writeXmlToFile(Document doc, String outFileName) {
+    private static void writeXmlToOutputStream(Document doc, OutputStream outputStream) {
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
-
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(outFileName));
+
+            StreamResult result = new StreamResult(outputStream);
+
             transformer.transform(source, result);
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
